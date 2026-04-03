@@ -12,7 +12,7 @@ load_dotenv()
 # ─── Structured logging setup ─────────────────────────────────────────────────
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s %(levelname)s request_id=%(request_id)s %(message)s',
+    format='%(asctime)s %(levelname)s %(message)s',
     datefmt='%Y-%m-%dT%H:%M:%S'
 )
 
