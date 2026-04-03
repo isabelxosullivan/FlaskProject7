@@ -1,5 +1,5 @@
 pytest
 flask
-psycopg[binary]
+psycopg2[binary]
 requests
 python-dotenv
