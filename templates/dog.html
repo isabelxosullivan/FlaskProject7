@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dogs</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: white;
+            padding: 12px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+        nav a {
+            text-decoration: none;
+            color: #555;
+            font-size: 0.95em;
+            padding: 6px 12px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        nav a:hover { background: #f0f0f0; }
+        nav a.home { font-weight: bold; color: #333; font-size: 1.1em; }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 100px 20px 40px;
+        }
+        h1 { font-size: 2em; color: #333; margin-bottom: 30px; }
+        h2 { font-size: 1.4em; color: #444; margin: 30px 0 15px; }
+        .dog-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 10px;
+            display: block;
+            margin: 10px 0;
+        }
+        .timestamp { color: #999; font-size: 0.85em; margin-bottom: 8px; }
+        button {
+            margin-top: 12px;
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        button:hover { background: #43a047; }
+        .refresh {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #5b8dee;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1em;
+        }
+        .refresh:hover { background: #4a7be0; }
+        .empty { color: #999; font-style: italic; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/" class="home">🐶 Dog App</a>
+        <a href="/dog/view">See Dogs</a>
+        <a href="/health">Health</a>
+        <a href="/status">Status</a>
+        <a href="/dogs">Saved Dogs</a>
+    </nav>
+
+    <div class="container">
+        <h1>🐾 Dog Viewer</h1>
+
+        {% if fresh_dog %}
+        <h2>Random Dog</h2>
+        <div class="dog-card">
+            <img src="{{ fresh_dog }}" alt="Random dog">
+            <form action="/dog/save" method="POST">
+                <input type="hidden" name="image_url" value="{{ fresh_dog }}">
+                <button type="submit">Save this dog ❤️</button>
+            </form>
+        </div>
+        {% endif %}
+
+        <a href="/dog/view" class="refresh">🔄 Load another dog</a>
+
+        <h2>Saved Dogs</h2>
+        {% if dogs %}
+            {% for image_url, created_at in dogs %}
+            <div class="dog-card">
+                <p class="timestamp">Saved: {{ created_at }}</p>
+                <img src="{{ image_url }}" alt="Saved dog">
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="empty">No dogs saved yet.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
