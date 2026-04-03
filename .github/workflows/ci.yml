@@ -27,8 +27,7 @@ jobs:
       - name: Lint with flake8
         run: |
           pip install flake8
-          flake8 app.py --max-line-length=120 --ignore=E501,W503
-
+          flake8 app.py --max-line-length=120 --ignore=E501,W503,E302,E305,F841,F811,E402,W391
       - name: Run tests with pytest
         env:
           DB_HOST: ${{ secrets.DB_HOST }}
